@@ -387,7 +387,7 @@ int bldev_transfer(struct aoerequest *work)
 		/* reply skb */
 		buff = (char *)work->atareply + sizeof(struct aoe_atahdr);
 
-		generic_file_read(work->abd->fp, buff,
+		do_sync_read(work->abd->fp, buff,
 				  (work->atarequest->nsect * 512), &ppos);
 
 		break;
@@ -398,7 +398,7 @@ int bldev_transfer(struct aoerequest *work)
 		/* request skb */
 		buff = (char *)work->atarequest + sizeof(struct aoe_atahdr);
 
-		generic_file_write(work->abd->fp, buff,
+		do_sync_write(work->abd->fp, buff,
 				   (work->atarequest->nsect * 512), &ppos);
 
 		break;

@@ -58,7 +58,7 @@ static int aoeproc_seq_show(struct seq_file *s, void *p)
 			seq_printf(s, "%-25s %-10d %-10d", abd->name,
 				   abd->shelf, abd->slot);
 			if (abd->ifindex > 0)
-				if ((dev = dev_get_by_index(abd->ifindex))) {
+				if ((dev = dev_get_by_index(&init_net, abd->ifindex))) {
 					seq_printf(s, "%s", dev->name);
 					dev_put(dev);
 				}
@@ -192,7 +192,7 @@ int cmd_register(int argc, char **argv)
 			return (-EINVAL);
 		}
 
-		dev = dev_get_by_name(argv[4]);
+		dev = dev_get_by_name(&init_net, argv[4]);
 		if (dev == NULL)
 			return (-EINVAL);
 
@@ -240,7 +240,7 @@ int cmd_unregister(int argc, char **argv)
 			return (-EINVAL);
 		}
 
-		dev = dev_get_by_name(argv[4]);
+		dev = dev_get_by_name(&init_net, argv[4]);
 		if (dev == NULL)
 			return (-EINVAL);
 
